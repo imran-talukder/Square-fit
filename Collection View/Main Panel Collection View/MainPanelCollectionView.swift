@@ -14,6 +14,7 @@ class MainPanelCollectionView: UIView{
     let mainPanelIconImageNameArray: [String] = ["New", "Canvas", "Crop", "Style", "Filter", "Preset", "Frame", "Border", "Shape", "Color", "Text", "Draw", "Sticker", "Edit"]
     var mainPanelCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     weak var delegate: MainPanelCollectionViewDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -66,7 +67,6 @@ extension MainPanelCollectionView: UICollectionViewDataSource,UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("tapped \(indexPath.row)")
         delegate?.send_data_from_mainPanel_To_EditVC(index: indexPath.row)
     }
 }

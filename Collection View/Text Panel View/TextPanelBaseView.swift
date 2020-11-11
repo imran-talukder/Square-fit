@@ -11,7 +11,7 @@ class TextPanelBaseView: UIView {
     var topParentStack: UIStackView!
     var buttonStack: UIStackView!
     var layerStack: UIStackView!
-    var delegate: TextPanelBaseViewDelegate?
+    var delegate: TextPanelViewDelegate?
     //MARK: - buttons
     var newButton: UIButton = UIButton()
     var colorButton: UIButton = UIButton()
@@ -24,6 +24,9 @@ class TextPanelBaseView: UIView {
     var backButton: UIButton = UIButton()
     var pickerButton: UIButton = UIButton()
     
+//    override func layoutSubviews() {
+//        commonInit()
+//    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -47,7 +50,7 @@ class TextPanelBaseView: UIView {
         topParentStack.axis = .horizontal
         topParentStack.distribution = .fill
         topParentStack.alignment = .center
-        topParentStack.spacing = 30
+        topParentStack.spacing = self.frame.width * 0.10869
         topParentStack.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         addSubview(topParentStack)
@@ -56,7 +59,7 @@ class TextPanelBaseView: UIView {
         
         //MARK: - top parentStack setup
         topParentStack.translatesAutoresizingMaskIntoConstraints = false
-        topParentStack.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: self.frame.height * 0.23809)
+        topParentStack.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: self.frame.height * 0.23952)
         
         //MARK: - back button setup
         
@@ -83,23 +86,17 @@ class TextPanelBaseView: UIView {
         pickerButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
         
         //MARK: - buttons target actions
-        
         backButton.addTarget(self, action: #selector(handleBackTappedInToolBar), for: .touchUpInside)
         shadowButton.addTarget(self, action: #selector(self.buttonTapped(_:)), for: .touchUpInside)
         colorButton.addTarget(self, action: #selector(self.buttonTapped(_:)), for: .touchUpInside)
-        
-        
     }
     @objc func buttonTapped(_ button: UIButton) {
-        print("shadow 1st tapped")
         delegate?.send_data_from_textPanel_To_EditVC(title: button.currentTitle!)
-        print(button.tag)
     }
     
     @objc func handleBackTappedInToolBar(){
         self.animHide(duration: 0.3)
     }
-    
     
     func setButtonStack() {
         setButtons(button: newButton, title: "    New")
@@ -134,7 +131,7 @@ class TextPanelBaseView: UIView {
         button.backgroundColor = .clear
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        //button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitleColor(.yellow, for: .highlighted)
         button.titleLabel?.font = UIFont(name: "KumbhSans-Bold", size: 16)
     }
     

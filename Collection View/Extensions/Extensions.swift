@@ -31,7 +31,6 @@ extension UIView {
             if height != 0 {
                 heightAnchor.constraint(equalToConstant: height).isActive = true
             }
-            
         }
 }
 
@@ -73,7 +72,7 @@ public extension UIDevice {
 
 extension UIView{
     func animShow(duration: Float){
-        UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.transitionFlipFromRight],
+        UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.curveLinear],
                        animations: {
                         self.center.y -= self.bounds.height
                         self.layoutIfNeeded()

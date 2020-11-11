@@ -12,8 +12,7 @@ class TextPanelShadowView: UIView {
     var backButton: UIButton = UIButton()
     var shadowSlider: UISlider = CustomSlider()
     var sliderPercentage: UILabel = UILabel()
-    var textPanelBaseDelegate: TextPanelBaseViewDelegate?
-    var shadowDelegate: TextPanelShadowDelegate?
+    var delegate: TextPanelViewDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -73,14 +72,14 @@ class TextPanelShadowView: UIView {
     //MARK: - Actions
     @objc func sliderEditing(slider: UISlider, event: UIEvent) {
         sliderPercentage.text = "\(Int(shadowSlider.value))%"
-        shadowDelegate?.send_data_from_textPanelShadowView_To_EditVC(slider: slider, event: event)
+        delegate?.send_data_from_textPanelShadowView_To_EditVC(slider: slider, event: event)
     }
     
     
     
     @objc func backButtonTapped() {
         self.isHidden = true
-        textPanelBaseDelegate?.send_data_from_textPanel_To_EditVC(title: "Back")
+        delegate?.send_data_from_textPanel_To_EditVC(title: "Back")
     }  
 }
 

@@ -14,6 +14,7 @@ class CanvasCollectionView: UIView {
     let canvasImageNameArray: [String] = ["Crop", "Style", "Filter", "Preset", "Frame", "Border", "Shape", "Color", "Text", "Draw", "Sticker", "Edit"]
     var canvasCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     var backButton: UIButton = UIButton()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -83,9 +84,7 @@ extension CanvasCollectionView: UICollectionViewDataSource,UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("tapped \(indexPath.row)")
-        
-        
+        print("tapped \(indexPath.row)")  
     }
 }
 

@@ -25,11 +25,8 @@ protocol MainPanelCollectionViewDelegate: class {
     
 }
 
-protocol TextPanelBaseViewDelegate {
+protocol TextPanelViewDelegate {
     func send_data_from_textPanel_To_EditVC(title: String)
-}
-
-
-protocol TextPanelShadowDelegate {
     func send_data_from_textPanelShadowView_To_EditVC(slider: UISlider, event: UIEvent)
+    func send_data_from_textPanelColorView_To_EditVC(colorIndex: Int, For: String, colorAlpha: Float)
 }

@@ -59,9 +59,8 @@ class ViewController: UIViewController{
         
         notchCheck()
         showMainPanelView()
-        showCanvasPanelView()
-        canvasTabBarView.animShow(duration: 0.05)
-        canvasTabBarView.animHide(duration: 0.05)
+        animationFix()
+        
         
     }
     
@@ -94,14 +93,14 @@ class ViewController: UIViewController{
         textTabBarView.delegate = self
         view.bringSubviewToFront(textTabBarView)
         textTabBarView.anchor(top: nil, left: self.view.leftAnchor, bottom: bottomNotchView.topAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0 , width: 0, height: view.frame.height * 0.1875)
+        textTabBarView.topParentStack.spacing = textTabBarView.frame.width * 0.10869
         textTabBarView.animShow(duration: 0.3)
     }
     
     func showTextPanelShadowView() {
         textTabBarView.isHidden = true
         view.addSubview(textPanelShadowView)
-        textPanelShadowView.textPanelBaseDelegate = self
-        textPanelShadowView.shadowDelegate = self
+        textPanelShadowView.delegate = self
         view.bringSubviewToFront(textPanelShadowView)
         textPanelShadowView.anchor(top: nil, left: self.view.leftAnchor, bottom: bottomNotchView.topAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0 , width: 0, height: view.frame.height * 0.125)
         textPanelShadowView.animShow(duration: 0.3)
@@ -111,8 +110,11 @@ class ViewController: UIViewController{
     func showTextPanelColorView() {
         view.addSubview(textPanelColorView)
         view.bringSubviewToFront(textPanelColorView)
+        textPanelColorView.delegate = self
         textPanelColorView.anchor(top: nil, left: self.view.leftAnchor, bottom: bottomNotchView.topAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0 , width: 0, height: view.frame.height * 0.1875)
         textPanelColorView.animShow(duration: 0.3)
+        textPanelColorView.backgroundButton.topAnchor.constraint(equalTo: textPanelColorView.topAnchor, constant: textPanelColorView.frame.height * 0.152).isActive = true
+        textPanelColorView.backButton.topAnchor.constraint(equalTo: textPanelColorView.slider.bottomAnchor, constant: textPanelColorView.frame.height * 0.1).isActive = true
     }
     
 
@@ -123,28 +125,44 @@ class ViewController: UIViewController{
             case 1136:
                 print("iPhone 5 or 5S or 5C")
                 bottomNotchControlHeightConstraint.constant = 0
-                
             case 1334:
                 print("iPhone 6/6S/7/8")
                 bottomNotchControlHeightConstraint.constant = 0
-                
             case 1920, 2208:
                 print("iPhone 6+/6S+/7+/8+")
-                
-                
             case 2436:
                 print("iPhone X/XS/11 Pro")
                 
             case 2688:
                 print("iPhone XS Max/11 Pro Max")
-                
             case 1792:
                 print("iPhone XR/ 11 ")
-                
             default:
                 print("Unknown")
             }
         }
+    }
+    func animationFix() {
+        showCanvasPanelView()
+        canvasTabBarView.animShow(duration: 0.05)
+        canvasTabBarView.animHide(duration: 0.05)
+        
+        showCropPanelView()
+        cropTabBarView.animShow(duration: 0.05)
+        cropTabBarView.animHide(duration: 0.05)
+        
+        showTextPanelBaseView()
+        textTabBarView.animShow(duration: 0.05)
+        textTabBarView.animHide(duration: 0.05)
+        
+        showTextPanelColorView()
+        textPanelColorView.animShow(duration: 0.05)
+        textPanelColorView.animHide(duration: 0.05)
+        
+        showTextPanelShadowView()
+        textPanelShadowView.animShow(duration: 0.05)
+        textPanelShadowView.animHide(duration: 0.05)
+        
     }
     
 }
@@ -162,7 +180,6 @@ extension ViewController: MainPanelCollectionViewDelegate {
             print("nothing will goes here")
         case 10:
             self.showTextPanelBaseView()
-            print("text panel view loaded")
             
         default:
             print("Hey")
@@ -218,7 +235,9 @@ extension ViewController: MainPanelCollectionViewDelegate {
 
 }
 
-extension ViewController: TextPanelBaseViewDelegate {
+//MARK: - Text panel delegate
+
+extension ViewController: TextPanelViewDelegate {
     
     func send_data_from_textPanel_To_EditVC(title: String) {
         switch title {
@@ -238,9 +257,6 @@ extension ViewController: TextPanelBaseViewDelegate {
             self.showTextPanelBaseView()
         }
     }
-}
-
-extension ViewController: TextPanelShadowDelegate {
     func send_data_from_textPanelShadowView_To_EditVC(slider: UISlider, event: UIEvent) {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
@@ -254,6 +270,9 @@ extension ViewController: TextPanelShadowDelegate {
                     break
             }
         }
+    }
+    func send_data_from_textPanelColorView_To_EditVC(colorIndex: Int, For: String, colorAlpha: Float) {
+        print("\(For) color neet to set for colorIndex: \(colorIndex) with Alpha \(colorAlpha)")
     }
 }
 

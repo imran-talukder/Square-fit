@@ -84,7 +84,6 @@ extension CropCollectionView: UICollectionViewDataSource,UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("tapped \(indexPath.row)")
         delegate?.send_data_from_cropPanel_To_EditVC(index: indexPath.row)
         
     }
